@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Katalog.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class GenreController : Controller
     {
         private readonly IGenreService _genreService;
