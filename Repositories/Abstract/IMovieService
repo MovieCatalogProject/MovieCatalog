@@ -1,1 +1,18 @@
 
+using Katalog.Controllers;
+using Katalog.Models.Domain;
+using Katalog.Models.DTO;
+using System.Net.NetworkInformation;
+
+namespace Katalog.Repositories.Abstract
+{
+    public interface IMovieService
+    {
+        bool Add(Movie model);
+        bool Update(Movie model);
+        Movie GetById(int id);
+        bool Delete(int id);
+        MovieListVm List(string term ="", bool paging = false, int CurrentPage = 0);
+        List<int> GetGenreByMovieId(int movieID);
+    }
+}
