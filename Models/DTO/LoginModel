@@ -1,15 +1,14 @@
-
 using System.ComponentModel.DataAnnotations;
 
 namespace Katalog.Models.DTO
 {
-    public class LoginModel
+    public class LoginModel //Класът се използва като модел за удостоверение на потребителите
     {
         [Required]
-        public string? Username { get; set; } //nullable string
+        public string Username { get; set; }
 
         [Required]
-        public string? Password { get; set; } //nullable string
+        public string Password { get; set; }
         
     }
 }
