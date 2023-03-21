@@ -1,6 +1,3 @@
-
-using Katalog.Controllers;
-using Katalog.Models.Domain;
 using Katalog.Models.DTO;
 using System.Net.NetworkInformation;
 
@@ -8,11 +5,12 @@ namespace Katalog.Repositories.Abstract
 {
     public interface IMovieService
     {
-        bool Add(Movie model);
-        bool Update(Movie model);
-        Movie GetById(int id);
-        bool Delete(int id);
-        MovieListVm List(string term ="", bool paging = false, int CurrentPage = 0);
-        List<int> GetGenreByMovieId(int movieID);
+        bool Add(Movie model); //Връща информация дали операцията по добавяне на филм в базата данни е била успешна или не
+        bool Update(Movie model); //Връща информация дали операцията по обновление на базата данни е била успешна или не
+        Movie GetById(int id); //Извлича филм от базата данни по неговото id
+        bool Delete(int id); //Връща информация дали операцията по изтриване на даден филм е била успешна или не
+        MovieListVm List(string term ="", bool paging = false, int CurrentPage = 0); //Връща списък на всички филми от базата данни,
+        //филтрирани чрез дадена дума 
+        List<int> GetGenreByMovieId(int movieID); //Връща списък от id-тата на жанровете свръзани с id-то на дадения филм
     }
 }
