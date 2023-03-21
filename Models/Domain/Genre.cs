@@ -1,8 +1,8 @@
-﻿using Microsoft.Build.Framework;
+using Microsoft.Build.Framework;
 
 namespace Katalog.Models.Domain
 {
-    public class Genre
+    public class Genre //Класът създава таблица Genre в базата данни
     {
         public int Id { get; set; }
         [Required] //Не може да бъде празно
