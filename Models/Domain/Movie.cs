@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Katalog.Models.Domain
 {
-    public class Movie
+    public class Movie // Класът създава таблицата Movie в базата данни
     {
         
         public int Id { get; set; }
@@ -19,17 +19,22 @@ namespace Katalog.Models.Domain
         [Required]
         public string? Director { get; set; }
 
-        [NotMapped]
+        [NotMapped] //Няма да се създава колона за този обект в таблицата
         public IFormFile? ImageFile { get; set; }
         [NotMapped]
         [Required]
         public List<int>? Genres { get; set; }
         [NotMapped]
-        public IEnumerable<SelectListItem>? GenreList { get; set; }
-        [NotMapped]
-        public string? GenreNames { get; set; }
+        public IEnumerable<SelectListItem>? GenreList { get; set; } //свойство от тип IEnumerable<SelectListItem> (последователност от
+               //избираеми обекти), използвано за показване на списък с жанрове в падащ списък във формуляра за филм.
 
         [NotMapped]
-        public MultiSelectList? MultiGenreList { get; set; }
+        public string? GenreNames { get; set; } //Свойство, използвано за съхранение на повече жанрове, разделени със запетая
+               
+
+        [NotMapped]
+        public MultiSelectList? MultiGenreList { get; set; } //Свойство, използвано за показване на списък
+               //с жанрове в падащ списък и може да се избират повече от един жанрове
+        
     }
 }
