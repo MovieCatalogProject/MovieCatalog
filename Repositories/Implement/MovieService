@@ -1,11 +1,10 @@
-
 using Katalog.Models.Domain;
 using Katalog.Models.DTO;
 using Katalog.Repositories.Abstract;
 
 namespace Katalog.Repositories.Implement
 {
-    public class MovieService : IMovieService
+    public class MovieService : IMovieService //Класът отговаря за добавянето, изтриването, обновяването и извиличането на филми от базата данни
     {
         
         private readonly DatabaseContext ctx;
@@ -13,7 +12,7 @@ namespace Katalog.Repositories.Implement
         {
             this.ctx = ctx;
         }
-        public bool Add(Movie model)
+        public bool Add(Movie model) //Методът добавя нов филм към базата данни заедно със зададените към него жанрове.
         {
             try
             {
@@ -37,7 +36,7 @@ namespace Katalog.Repositories.Implement
             }
         }
 
-        public bool Delete(int id)
+        public bool Delete(int id) //Методът премахва филм от базата данни заедно със зададените към него жанрове.
         {
             try
             {
@@ -59,12 +58,13 @@ namespace Katalog.Repositories.Implement
             }
         }
 
-        public Movie GetById(int id)
+        public Movie GetById(int id) //Извлича филм от Movie таблиата в базата данни
         {
             return ctx.Movie.Find(id);
         }
 
-        public MovieListVm List(string term="",bool paging = false, int currentPage=0)
+        public MovieListVm List(string term="",bool paging = false, int currentPage=0) //Методът извлича списък с всички филми от таблицата Movie,
+        //по избор филтриран по дума за търсене/paginated.
         {
             var data = new MovieListVm();
             
@@ -86,8 +86,8 @@ namespace Katalog.Repositories.Implement
                 data.CurrentPage=currentPage;
                 data.TotalPages = TotalPages;
             }
-
-            foreach (var movie in list)
+            foreach (var movie in list)//преминава през списъка с филми и за всеки филм отправя запитване към таблиците Genre и MovieGenre
+            //в базата данни, за да извлече имената на жанровете, свързани с дадения филм
             {
                 var genres = (from genre in ctx.Genre
                               join mg in ctx.MovieGenre
@@ -102,7 +102,7 @@ namespace Katalog.Repositories.Implement
             return data;
         }
 
-        public bool Update(Movie model)
+        public bool Update(Movie model) //Методът актуализира съществуващ филм в базата данни заедно със зададените към него жанрове.
         {
             try
             {
@@ -114,7 +114,7 @@ namespace Katalog.Repositories.Implement
                 }
                 foreach (int genId in model.Genres)
                 {
-                    var movieGenre = ctx.MovieGenre.FirstOrDefault(a => a.MovieId == model.Id && a.GenreId == genId); // първи елемент или null
+                    var movieGenre = ctx.MovieGenre.FirstOrDefault(a => a.MovieId == model.Id && a.GenreId == genId); //FirstOrDefault - първи елемент или null
                     if (movieGenre == null)
                     {
                         movieGenre = new MovieGenre { GenreId = genId, MovieId = model.Id };
@@ -132,7 +132,7 @@ namespace Katalog.Repositories.Implement
             }
         }
 
-        public List<int> GetGenreByMovieId(int movieID)
+        public List<int> GetGenreByMovieId(int movieID) //Взима id-тата на жанровете, свързани с id-то на конкретен филм
         {
             var genreIds = ctx.MovieGenre.Where(a => a.MovieId == movieID).Select(a => a.GenreId).ToList();
             return genreIds;
