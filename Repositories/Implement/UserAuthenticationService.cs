@@ -1,4 +1,4 @@
-﻿using Katalog.Models.Domain;
+using Katalog.Models.Domain;
 using Katalog.Models.DTO;
 using Katalog.Repositories.Abstract;
 using Microsoft.AspNetCore.Identity;
@@ -6,11 +6,11 @@ using System.Security.Claims;
 
 namespace Katalog.Repositories.Implementation
 {
-    public class UserAuthenticationService : IUserAuthenticationService
+    public class UserAuthenticationService : IUserAuthenticationService //Класът е свързан с логването, log out-ването и регистрацията на потребителя
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager; //ASP
+        private readonly RoleManager<IdentityRole> roleManager; //ASP
+        private readonly SignInManager<ApplicationUser> signInManager; //ASP
         public UserAuthenticationService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
@@ -20,7 +20,7 @@ namespace Katalog.Repositories.Implementation
 
         }
 
-        public async Task<Status> RegisterAsync(RegistrationModel model)
+        public async Task<Status> RegisterAsync(RegistrationModel model) //Създава нов потребител с подадените данни и проверява дали вече съществува такъв
         {
             var status = new Status();
             var userExists = await userManager.FindByNameAsync(model.Username);
@@ -62,7 +62,7 @@ namespace Katalog.Repositories.Implementation
         }
 
 
-        public async Task<Status> LoginAsync(LoginModel model)
+        public async Task<Status> LoginAsync(LoginModel model) //Удостоверява потребителя с подадени данни за вход и проверява дали въведените данни са валидни
         {
             var status = new Status();
             var user = await userManager.FindByNameAsync(model.Username);
@@ -110,36 +110,10 @@ namespace Katalog.Repositories.Implementation
             return status;
         }
 
-        public async Task LogoutAsync()
+        public async Task LogoutAsync() //Изкарва потребителя от сайта
         {
             await signInManager.SignOutAsync();
 
         }
-
-        //public async Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username)
-        //{
-        //    var status = new Status();
-
-        //    var user = await userManager.FindByNameAsync(username);
-        //    if (user == null)
-        //    {
-        //        status.Message = "User does not exist";
-        //        status.StatusCode = 0;
-        //        return status;
-        //    }
-        //    var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-        //    if (result.Succeeded)
-        //    {
-        //        status.Message = "Password has updated successfully";
-        //        status.StatusCode = 1;
-        //    }
-        //    else
-        //    {
-        //        status.Message = "Some error occcured";
-        //        status.StatusCode = 0;
-        //    }
-        //    return status;
-
-        //}
     }
 }
