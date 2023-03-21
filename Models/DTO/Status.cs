@@ -1,6 +1,6 @@
-﻿namespace Katalog.Models.DTO
+namespace Katalog.Models.DTO
 {
-    public class Status
+    public class Status //Класът предоставя обратна информация към потребителя относно дали извършената операция е успешна или не
     {
         public int StatusCode { get; set; }
 
