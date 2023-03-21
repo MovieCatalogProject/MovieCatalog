@@ -1,19 +1,21 @@
-﻿using Katalog.Repositories.Abstract;
+using Katalog.Repositories.Abstract;
 
 namespace Katalog.Repositories.Implementation
 {
-    public class FileServices : IFileServices
+    public class FileServices : IFileServices //Класът позволява потребителите на качват и да изтриват снимки в сайта
     {
         private readonly IWebHostEnvironment environment;
         public FileServices(IWebHostEnvironment env)
-        {
+        }
             this.environment = env;
         }
 
-        public Tuple<int, string> SaveImage(IFormFile imageFile)
+        public Tuple<int, string> SaveImage(IFormFile imageFile) //Методът взема файл с изображение и го записва в "Uploads"
         {
             try
             {
+                //проверяваме дали съществува директория Uploads:
+
                 var wwwPath = this.environment.WebRootPath;
                 var path = Path.Combine(wwwPath, "Uploads");
                 if (!Directory.Exists(path))
@@ -21,7 +23,7 @@ namespace Katalog.Repositories.Implementation
                     Directory.CreateDirectory(path);
                 }
 
-                // проверява кои разширения са разрешени:
+                // задаваме позволените разширения:
 
                 var ext = Path.GetExtension(imageFile.FileName);
                 var allowedExtensions = new string[] { ".jpg", ".png", ".jpeg" };
@@ -47,7 +49,7 @@ namespace Katalog.Repositories.Implementation
             }
         }
 
-        public bool DeleteImage(string imageFileName)
+        public bool DeleteImage(string imageFileName) //Взима името на даден снимков файл и изтрива съответстващия файл от директорията "Uploads"
         {
             try
             {
