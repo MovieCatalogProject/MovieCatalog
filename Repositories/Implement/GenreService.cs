@@ -1,4 +1,4 @@
-﻿using Katalog.Models.Domain;
+using Katalog.Models.Domain;
 using Katalog.Repositories.Abstract;
 
 namespace Katalog.Repositories.Implement
@@ -11,7 +11,7 @@ namespace Katalog.Repositories.Implement
         {
             this.ctx = ctx;
         }
-        public bool Add(Genre model)
+        public bool Add(Genre model)//Методът приема обект Genre и го добавя към таблицата Genre в базата данни. Ако стане връща true, ако не - false
         {
             try
             {
@@ -25,7 +25,7 @@ namespace Katalog.Repositories.Implement
             }
         }
 
-        public bool Delete(int id)
+        public bool Delete(int id) //Методът взима id-то на избрания жанр и изтрива съответния Genre обект от таблицата"Genre в базата данни. Ако стане връща true, ако не - false
         {
             try
             {
@@ -42,18 +42,18 @@ namespace Katalog.Repositories.Implement
             }
         }
 
-        public Genre GetById(int id)
+        public Genre GetById(int id) //Взима id-то на даден жанр и връща съответстващия обект
         {
             return ctx.Genre.Find(id);
         }
 
-        public IQueryable<Genre> List()
+        public IQueryable<Genre> List() //Връща всички Genre objects от Genre таблицата в базата данни
         {
             var data = ctx.Genre.AsQueryable();
             return data;
         }
 
-        public bool Update(Genre model)
+        public bool Update(Genre model) //Методът взима дадения Genre object и го обновява в базата данни. Ако стане връща true, ако не - false
         {
             try
             {
